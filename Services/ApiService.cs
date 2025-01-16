@@ -27,7 +27,7 @@ namespace DopamineDetox.ServiceAgent.Services
                 return HandleException<T>(ex);
             }
         }
-
+        // generic post method
         public async Task<ApiResponse<T>> PostAsync<T>(string endpoint, object data, CancellationToken cancellationToken = default)
         {
             try
