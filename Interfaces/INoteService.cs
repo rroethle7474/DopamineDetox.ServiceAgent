@@ -6,7 +6,6 @@ namespace DopamineDetox.ServiceAgent.Interfaces
 {
     public interface INoteService
     {
-        //Another test.
         Task<ApiResponse<IEnumerable<NoteDto>>> GetNotesAsync(GetNotesRequest request, CancellationToken cancellationToken);
         Task<ApiResponse<NoteDto>> GetNoteAsync(int id, CancellationToken cancellationToken);
         Task<ApiResponse<NoteDto>> CreateNoteAsync(NoteDto noteDto, CancellationToken cancellationToken);
