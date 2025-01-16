@@ -17,9 +17,17 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      [xml]$xml = Get-Content "$(Build.SourcesDirectory)/**/*.csproj"
-      $version = $xml.Project.PropertyGroup.PackageVersion
-      Write-Host "##vso[task.setvariable variable=PackageVersion]$version"
+      $csprojFile = Get-ChildItem -Path "$(Build.SourcesDirectory)" -Filter "*.csproj" -Recurse | Select-Object -First 1
+      if ($csprojFile) {
+          Write-Host "Found project file: $($csprojFile.FullName)"
+          [xml]$xml = Get-Content $csprojFile.FullName
+          $version = $xml.Project.PropertyGroup.PackageVersion
+          Write-Host "Found version: $version"
+          Write-Host "##vso[task.setvariable variable=PackageVersion]$version"
+      } else {
+          Write-Error "No .csproj file found!"
+          exit 1
+      }
 
 - task: NuGetCommand@2
   inputs:
