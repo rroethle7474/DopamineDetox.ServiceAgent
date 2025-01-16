@@ -1,5 +1,5 @@
 trigger:
-  - main  # or whatever your main branch is named
+  - main
 
 pool:
   vmImage: 'windows-latest'
@@ -14,7 +14,15 @@ variables:
 steps:
 - task: NuGetAuthenticate@1
   displayName: 'NuGet Authenticate'
-  
+
+# Add this task to add your feed as a NuGet source
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
+    vstsFeed: 'NugetPackages/domain-models-services'
+
 - task: DotNetCoreCLI@2
   displayName: 'Build'
   inputs:
