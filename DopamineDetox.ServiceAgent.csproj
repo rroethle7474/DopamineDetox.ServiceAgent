@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<PackageVersion>0.0.1</PackageVersion>
+    <AssemblyVersion>0.0.1</AssemblyVersion>
+    <FileVersion>0.0.1</FileVersion>
+	<DebugType>portable</DebugType>
+	<DebugSymbols>true</DebugSymbols>
+	<IncludeSymbols>true</IncludeSymbols>
+	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	<Title>DopamineDetox.ServiceAgent</Title>
+	<Authors>Ryan Roethle</Authors>
+	<Description>Service Agent used for the Social Media Detox Project to connect to API</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="DopamineDetox.Domain" Version="0.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+  </ItemGroup>
+
+</Project>
