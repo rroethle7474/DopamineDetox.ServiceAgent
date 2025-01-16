@@ -6,16 +6,21 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  Major: '0'
-  Minor: '0'
-  Patch: '1'
-  Version: $(Major).$(Minor).$(Patch)
 
 steps:
 - task: NuGetAuthenticate@1
   displayName: 'NuGet Authenticate'
 
-# Add this task to add your feed as a NuGet source
+# Add PowerShell task to read version from csproj
+- task: PowerShell@2
+  name: SetVersion
+  inputs:
+    targetType: 'inline'
+    script: |
+      [xml]$xml = Get-Content "$(Build.SourcesDirectory)/**/*.csproj"
+      $version = $xml.Project.PropertyGroup.PackageVersion
+      Write-Host "##vso[task.setvariable variable=PackageVersion]$version"
+
 - task: NuGetCommand@2
   inputs:
     command: 'restore'
@@ -36,13 +41,5 @@ steps:
     command: 'pack'
     packagesToPack: '**/*.csproj'
     versioningScheme: 'byEnvVar'
-    versionEnvVar: 'Version'
+    versionEnvVar: 'PackageVersion'
     configuration: $(buildConfiguration)
-
-- task: NuGetCommand@2
-  displayName: 'NuGet push'
-  inputs:
-    command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-    nuGetFeedType: 'internal'
-    publishVstsFeed: 'NugetPackages/domain-models-services'
