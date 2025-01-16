@@ -1,0 +1,40 @@
+trigger:
+  - main  # or whatever your main branch is named
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  Major: '0'
+  Minor: '0'
+  Patch: '1'
+  Version: $(Major).$(Minor).$(Patch)
+
+steps:
+- task: NuGetAuthenticate@1
+  displayName: 'NuGet Authenticate'
+  
+- task: DotNetCoreCLI@2
+  displayName: 'Build'
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Pack'
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/*.csproj'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'Version'
+    configuration: $(buildConfiguration)
+
+- task: NuGetCommand@2
+  displayName: 'NuGet push'
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: 'NugetPackages/domain-models-services'
