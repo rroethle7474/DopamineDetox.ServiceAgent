@@ -5,9 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	<PackageVersion>0.0.2</PackageVersion>
-    <AssemblyVersion>0.0.2</AssemblyVersion>
-    <FileVersion>0.0.2</FileVersion>
+	<PackageVersion>0.0.3</PackageVersion>
+    <AssemblyVersion>0.0.3</AssemblyVersion>
+    <FileVersion>0.0.3</FileVersion>
 	<DebugType>portable</DebugType>
 	<DebugSymbols>true</DebugSymbols>
 	<IncludeSymbols>true</IncludeSymbols>
@@ -17,7 +17,7 @@
 	<Description>Service Agent used for the Social Media Detox Project to connect to API</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DopamineDetox.Domain" Version="0.0.1" />
+    <PackageReference Include="DopamineDetox.Domain" Version="0.0.3" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
   </ItemGroup>
